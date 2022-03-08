@@ -10,4 +10,8 @@ from itemadapter import ItemAdapter
 
 class DruglistPipeline:
     def process_item(self, item, spider):
+        for key, values in item.items():
+            values = values[0]
+            # print(values)
+        # print('2')
         return item
