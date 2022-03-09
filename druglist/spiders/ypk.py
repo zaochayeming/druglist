@@ -22,8 +22,8 @@ class YpkSpider(scrapy.Spider):
         'http://ypk.39.net/zhongliu/'
     ]
 
-    def parse(self, response):
-        print(response.url)
+    def parse(self, response, **kwargs):
+        # print(response.url)
         drug_url = response.xpath('//ul[@class="drugs-ul"]/li/a/@href').extract()  # 获取当前页面药品详情页面url
         # print(drug_url)
         # 访问药品详情页面
@@ -49,14 +49,13 @@ class YpkSpider(scrapy.Spider):
         item_l = ItemLoader(item=item)
 
         m_name = response.xpath('//h1[@class="drug-layout-r-stor"]/text()').extract_first()  # 药品名称
-        print(m_name)
+        # print(m_name)
         item.fields['药品'] = Field()
         item_l.add_value('药品', m_name)
 
-        m_tag_content = response.xpath('//div[@class="drug-name-type-add"]/i/text()').extract()  # 药品类型标签
-        m_tag = '，'.join(m_tag_content)  # 药品类型标签合并
-        item.fields['类型'] = Field()
-        item_l.add_value('类型', m_tag)
+        m_tag = response.xpath('//div[@class="drug-name-type-add"]/i/text()').extract()  # 药品类型标签
+        item.fields['药品类型'] = Field()
+        item_l.add_value('药品类型', m_tag)
 
         drug_instructions = response.xpath('//ul[@class="drug-explain"]/li')
         for i in drug_instructions:
@@ -64,16 +63,11 @@ class YpkSpider(scrapy.Spider):
             key = i.xpath('./p[1]/text()').re(r'[【](.*?)[】]')[0]
 
             # 获取标题的内容信息
-            tem = i.xpath('./p[position()>1]//text()').extract()    #
+            tem = i.xpath('./p[position()>1]//text()').extract()
             tem = ''.join(tem)
             tem = re.split(r'\s+', tem)
             value = ''.join(tem).replace(',', '，').replace('<p>', '').replace('</p>', '')
             item.fields[key] = Field()
             item_l.add_value(key, value)
-            # item[key] = value
-            # print(key)
-            # print(value)
-        # print(item_l.load_item())
-        print('1')
-        print(response.url)
+
         return item_l.load_item()

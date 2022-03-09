@@ -1,2 +1,6 @@
 from scrapy import cmdline
-cmdline.execute(['scrapy', 'crawl', 'ypk'])
+
+# 运行爬虫
+# cmdline.execute(['scrapy', 'crawl', 'ypk'])
+# 导出成csv文件
+cmdline.execute(["scrapy crawl ypk -o result.csv -t csv".split()])
