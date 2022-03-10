@@ -37,10 +37,11 @@ class YpkSpider(scrapy.Spider):
         next_url = response.xpath('//p[@class="page-number"]/a[contains(text(), "下页")]/@href').extract_first()   # 获取下一页的url
         print(next_url)
         # 访问下一页药品数据
-        yield scrapy.Request(
-            next_url,
-            callback=self.parse
-        )
+        if next_url is not None:
+            yield scrapy.Request(
+                next_url,
+                callback=self.parse
+            )
         # pass
 
     # 获取药品说明书内容
