@@ -9,6 +9,8 @@ from xml.sax.saxutils import unescape
 # useful for handling different item types with a single interface
 
 
+
+
 class DruglistPipeline:
     def process_item(self, item, spider):
         for key, values in item.items():
@@ -78,6 +80,15 @@ class DruglistPipeline:
             # values = values[0]
             # print(values)
         print(item)
+        return item
+
+class DruglistPipelines:
+    def process_item(self, item, spider):
+        for key, values in item.items():
+            # values = values.replace(',', '，')
+            values = values.replace(',', '，')
+            # print(key, values)
+            # print(values)
         return item
 
 

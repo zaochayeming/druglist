@@ -15,6 +15,37 @@ NEWSPIDER_MODULE = 'druglist.spiders'
 
 LOG_LEVEL = 'WARNING'
 
+# FEED_EXPORTERS = {
+#     'csv': 'druglist.spiders.csv_item_exporter.MyProjectCsvItemExporter',
+# }
+#
+# FIELDS_TO_EXPORT = {
+#    'common_name',
+#    'trade_name',
+#    'english_name',
+#    'chinese_name',
+#    'medicine_tag',
+#    'component',
+#    'character',
+#    'indication',
+#    'functions',
+#    'dosage',
+#    'adverse_reaction',
+#    'taboo',
+#    'attention',
+#    'drug_interaction',
+#    'storage',
+#    'specifications',
+#    'package',
+#    'time',
+#    'approval_number',
+#    'revision_date',
+#    'special',
+#    'action',
+#    'enterprise_name',
+#    'enterprise_abbreviation'
+# }
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'druglist (+http://www.yourdomain.com)'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36'
@@ -66,7 +97,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'druglist.pipelines.DruglistPipeline': 300,
+   # 'druglist.pipelines.DruglistPipeline': 300,
+   'druglist.pipelines.DruglistPipelines': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
