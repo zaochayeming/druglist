@@ -85,8 +85,61 @@ class DruglistPipeline:
 class DruglistPipelines:
     def process_item(self, item, spider):
         for key, values in item.items():
-            # values = values.replace(',', '，')
-            values = values.replace(',', '，')
+            # print(values)
+
+            values = values[0].replace(',', '，').replace('', '') \
+                .replace('&nbsp;', ' ') \
+                .replace('&;;', '～') \
+                .replace('&ldquo;', '“') \
+                .replace('&nbs', ' ') \
+                .replace('&nb', ' ') \
+                .replace('&n', ' ') \
+                .replace('&middot', '·') \
+                .replace('&rsquo', '"') \
+                .replace('&amp', '&') \
+                .replace('&ndash', ';') \
+                .replace('&times', '×') \
+                .replace('&ge;', '⊂') \
+                .replace('&ge', '⊂') \
+                .replace('&alpha', 'α') \
+                .replace('&;alpha;', 'α') \
+                .replace('&beta', 'β') \
+                .replace('&;beta;', 'β') \
+                .replace('&Beta', 'β') \
+                .replace('&gamma;', 'γ') \
+                .replace('&gamma', 'γ') \
+                .replace('&Delta;', 'Δ') \
+                .replace('&prime;', '′') \
+                .replace('&gt;', '>') \
+                .replace('&deg;', '°') \
+                .replace('&deg', '°') \
+                .replace('&plusmn', '±') \
+                .replace('&hellip;', '…') \
+                .replace('&larr;', '←') \
+                .replace('&acute;', '´') \
+                .replace('&micro;', 'µ') \
+                .replace('&bull;;', '•') \
+                .replace('&;bull;', '•') \
+                .replace('&bull;', '•') \
+                .replace('&Ograve;', 'Ò') \
+                .replace('&rdquo;', '”') \
+                .replace('&mu', 'μ') \
+                .replace('&le', '≤') \
+                .replace('rsquo', '"') \
+                .replace('&mu', 'Ν') \
+                .replace('amp', '&') \
+                .replace('&mdash;', '—') \
+                .replace('mdash', '—') \
+                .replace('&rarr;', '→') \
+                .replace('&gt;;', '>') \
+                .replace('&ordm;', 'º') \
+                .replace('&infin;', '∞') \
+                .replace('&lt;', '<') \
+                .replace('&lt;', '<') \
+                .replace('&#;', '、') \
+                .replace('&#8226;', '·')
+            # print(key, ':', values)
+
             # print(key, values)
             # print(values)
         return item
