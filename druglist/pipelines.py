@@ -103,7 +103,6 @@ class DruglistPipelines:
         print(data)
         self.exporter.export_item(data)
 
-
         for key, values in item.items():
             # print(key, values)
             values = values[0].replace(',', '，').replace('', '') \
