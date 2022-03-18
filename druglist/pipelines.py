@@ -5,10 +5,11 @@
 import re
 import setuptools
 from xml.sax.saxutils import unescape
+import json
+from scrapy.exporters import JsonItemExporter
+
 
 # useful for handling different item types with a single interface
-
-
 
 
 class DruglistPipeline:
@@ -24,17 +25,17 @@ class DruglistPipeline:
             else:
                 # 替换转义字符和html标签内容
                 # content = html_parser.unescape(re.sub('<[^>]*>', '', values[0]))
-                content = unescape(re.sub('<[^>]*>', '', values[0])).replace('', '')\
-                    .replace('&nbsp;', ' ')\
-                    .replace('&;;', '～')\
-                    .replace('&ldquo;', '“')\
-                    .replace('&nbs', ' ')\
-                    .replace('&nb', ' ')\
-                    .replace('&n', ' ')\
-                    .replace('&middot', '·')\
-                    .replace('&rsquo', '"')\
-                    .replace('&amp', '&')\
-                    .replace('&ndash', ';')\
+                content = unescape(re.sub('<[^>]*>', '', values[0])).replace('', '') \
+                    .replace('&nbsp;', ' ') \
+                    .replace('&;;', '～') \
+                    .replace('&ldquo;', '“') \
+                    .replace('&nbs', ' ') \
+                    .replace('&nb', ' ') \
+                    .replace('&n', ' ') \
+                    .replace('&middot', '·') \
+                    .replace('&rsquo', '"') \
+                    .replace('&amp', '&') \
+                    .replace('&ndash', ';') \
                     .replace('&times', '×') \
                     .replace('&ge;', '⊂') \
                     .replace('&ge', '⊂') \
@@ -62,19 +63,19 @@ class DruglistPipeline:
                     .replace('&rdquo;', '”') \
                     .replace('&mu', 'μ') \
                     .replace('&le', '≤') \
-                    .replace('rsquo', '"')\
-                    .replace('&mu', 'Ν')\
-                    .replace('amp', '&')\
-                    .replace('&mdash;', '—')\
-                    .replace('mdash', '—')\
-                    .replace('&rarr;', '→')\
-                    .replace('&gt;;', '>')\
-                    .replace('&ordm;', 'º')\
-                    .replace('&infin;', '∞')\
-                    .replace('&lt;', '<')\
-                    .replace('&lt;', '<')\
-                    .replace('&#;', '、')\
-                    .replace('Hydroxyc&tothecinfor', 'Hydroxycamptothecinfor ')\
+                    .replace('rsquo', '"') \
+                    .replace('&mu', 'Ν') \
+                    .replace('amp', '&') \
+                    .replace('&mdash;', '—') \
+                    .replace('mdash', '—') \
+                    .replace('&rarr;', '→') \
+                    .replace('&gt;;', '>') \
+                    .replace('&ordm;', 'º') \
+                    .replace('&infin;', '∞') \
+                    .replace('&lt;', '<') \
+                    .replace('&lt;', '<') \
+                    .replace('&#;', '、') \
+                    .replace('Hydroxyc&tothecinfor', 'Hydroxycamptothecinfor ') \
                     .replace('&#8226;', '·')
                 item[key] = content
             # values = values[0]
@@ -82,11 +83,29 @@ class DruglistPipeline:
         print(item)
         return item
 
-class DruglistPipelines:
-    def process_item(self, item, spider):
-        for key, values in item.items():
-            # print(values)
 
+class DruglistPipelines:
+    def __init__(self):
+        # 爬虫开始生成json文件
+        self.file = open("result.json", 'wb')
+        self.exporter = JsonItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
+        self.exporter.start_exporting()
+
+    def close_spider(self, spider):
+        # 导出json文件结束
+        self.exporter.finish_exporting()
+        self.file.close()
+
+    def process_item(self, item, spider):
+        # 过滤通用名称并导出json文件
+        tem = item['通用名称'][0]
+        data = dict({'通用名称': tem})
+        print(data)
+        self.exporter.export_item(data)
+
+
+        for key, values in item.items():
+            # print(key, values)
             values = values[0].replace(',', '，').replace('', '') \
                 .replace('&nbsp;', ' ') \
                 .replace('&;;', '～') \
@@ -139,7 +158,6 @@ class DruglistPipelines:
                 .replace('&#;', '、') \
                 .replace('&#8226;', '·')
             # print(key, ':', values)
-
             # print(key, values)
             # print(values)
         return item
