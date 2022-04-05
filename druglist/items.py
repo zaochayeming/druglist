@@ -33,3 +33,6 @@ class DruglistItem(scrapy.Item):
     # action = scrapy.Field()    # 药理作用
     # enterprise_name = scrapy.Field()    # 企业名称
     # enterprise_abbreviation = scrapy.Field()    # 企业简称
+
+class DiseaselistItem(scrapy.Item):
+    pass

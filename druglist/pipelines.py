@@ -159,6 +159,15 @@ class DruglistPipelines:
             # print(values)
         return item
 
+class DiseaseListPipelines:
+    def process_item(self, item, spider):
+        # print('1')
+        for key, values in item.items():
+            values = values[0].replace(',', '，')
+            # print(values)
+            print(key, values)
+        return item
+
 
 class DataProcess:
     def m_name(self):

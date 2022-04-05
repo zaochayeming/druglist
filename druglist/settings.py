@@ -98,7 +98,8 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # 'druglist.pipelines.DruglistPipeline': 300,
-   'druglist.pipelines.DruglistPipelines': 301,
+   # 'druglist.pipelines.DruglistPipelines': 301,
+   'druglist.pipelines.DiseaseListPipelines': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
