@@ -6,6 +6,7 @@
 import scrapy
 
 class DruglistItem(scrapy.Item):
+    pass
     # define the fields for your item here like:
     # name = scrapy.Field()
 
@@ -34,5 +35,6 @@ class DruglistItem(scrapy.Item):
     # enterprise_name = scrapy.Field()    # 企业名称
     # enterprise_abbreviation = scrapy.Field()    # 企业简称
 
-class DiseaselistItem(scrapy.Item):
+class SymptomlistItem(scrapy.Item):
+    name = scrapy.Field()
     pass

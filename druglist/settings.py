@@ -99,7 +99,8 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
    # 'druglist.pipelines.DruglistPipeline': 300,
    # 'druglist.pipelines.DruglistPipelines': 301,
-   'druglist.pipelines.DiseaseListPipelines': 302,
+   # 'druglist.pipelines.DiseaseListPipelines': 302,
+   'druglist.pipelines.AhospitalListPipelines': 303,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
